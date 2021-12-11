@@ -14,6 +14,7 @@ locals {
   ecs_cpu = 512
   ecs_memory = 1024
   ecs_container_name = "nextjs-image"
+  ecs_log_group = "/aws/ecs/${var.project_id}-${var.env}"
 }
 
 module "networking" {
@@ -119,6 +120,11 @@ resource "aws_ecs_cluster" "web_cluster" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "ecs" {
+  name = local.ecs_log_group
+  retention_in_days = 1
+}
+
 data "template_file" "task_def_generated" {
   template = "${file("./task-definitions/service.json.tpl")}"
   vars = {
@@ -131,6 +137,7 @@ data "template_file" "task_def_generated" {
     ecs_execution_role  = module.ecs_roles.ecs_execution_role_arn
     launch_type         = local.ecs_launch_type
     network_mode        = local.ecs_network_mode
+    log_group           = local.ecs_log_group
   }
 }
 
@@ -192,4 +199,3 @@ module "ecs_roles" {
   # Extend baseline policy statements (ignore for now)
   ecs_execution_policies_extension = {}
 }
-
