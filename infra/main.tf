@@ -15,6 +15,8 @@ locals {
   ecs_memory = 1024
   ecs_container_name = "nextjs-image"
   ecs_log_group = "/aws/ecs/${var.project_id}-${var.env}"
+  # Retention in days
+  ecs_log_retention = 1
 }
 
 module "networking" {
@@ -122,7 +124,7 @@ resource "aws_ecs_cluster" "web_cluster" {
 
 resource "aws_cloudwatch_log_group" "ecs" {
   name = local.ecs_log_group
-  retention_in_days = 1
+  retention_in_days = local.ecs_log_retention
 }
 
 data "template_file" "task_def_generated" {
