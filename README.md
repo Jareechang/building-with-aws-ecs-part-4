@@ -1,6 +1,6 @@
-### Building with AWS ECS part 3 (update)
+### Building with AWS ECS part 4
 
-This is the code from part 3 of the [“building with AWS ECS“ series](https://www.jerrychang.ca/writing/introducing-aws-ecs-technical-series).
+This is the code from part 4 of the [“building with AWS ECS“ series](https://www.jerrychang.ca/writing/introducing-aws-ecs-technical-series).
 
 ### Getting started
 
